@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>TaskFlare — Todo Application</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="TaskFlare home">
+        <span class="brand-mark" aria-hidden="true">✓</span>
+        <span class="brand-name">TASK<span>FLARE</span></span>
+      </a>
+
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Task filters">
+        <button class="nav-link is-active" type="button" data-filter="all" aria-pressed="true">
+          <span class="nav-icon" aria-hidden="true">▤</span>
+          <span>All tasks</span>
+          <span class="nav-count" id="allCount">0</span>
+        </button>
+        <button class="nav-link" type="button" data-filter="active" aria-pressed="false">
+          <span class="nav-icon" aria-hidden="true">◷</span>
+          <span>In progress</span>
+          <span class="nav-count" id="activeCount">0</span>
+        </button>
+        <button class="nav-link" type="button" data-filter="completed" aria-pressed="false">
+          <span class="nav-icon" aria-hidden="true">✓</span>
+          <span>Completed</span>
+          <span class="nav-count" id="completedSideCount">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="focus-card">
+          <div class="focus-flame" aria-hidden="true">♨</div>
+          <p class="focus-title">Keep your momentum.</p>
+          <p class="focus-copy">One task at a time. Make today count.</p>
+        </div>
+        <p class="sidebar-note">BUILT TO KEEP YOU MOVING</p>
+      </div>
+    </aside>
+
+    <main class="main-content" id="top">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL WORKSPACE</p>
+          <h1>Make it <span>happen.</span></h1>
+          <p class="today-line" id="todayDate">Today</p>
+        </div>
+        <div class="header-flame" aria-label="Flame accent">🔥</div>
+      </header>
+
+      <section class="stats-grid" aria-label="Task statistics">
+        <article class="stat-card">
+          <div class="stat-icon stat-icon-red" aria-hidden="true">▤</div>
+          <div class="stat-copy"><p>Total tasks</p><strong id="totalCount">0</strong></div>
+          <span class="stat-accent"></span>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon stat-icon-orange" aria-hidden="true">✓</div>
+          <div class="stat-copy"><p>Completed</p><strong id="completedCount">0</strong></div>
+          <span class="stat-accent"></span>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon stat-icon-muted" aria-hidden="true">◷</div>
+          <div class="stat-copy"><p>Remaining</p><strong id="pendingCount">0</strong></div>
+          <span class="stat-accent"></span>
+        </article>
+      </section>
+
+      <section class="progress-panel" aria-label="Completion progress">
+        <div class="progress-topline">
+          <div>
+            <p class="progress-kicker">YOUR DAILY PROGRESS</p>
+            <h2>Stay on the move</h2>
+          </div>
+          <strong id="progressPercentage">0%</strong>
+        </div>
+        <div class="progress-track" role="progressbar" aria-label="Tasks completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+          <div class="progress-value" id="progressFill"></div>
+        </div>
+        <p class="progress-caption" id="progressCaption">Add a task to get started.</p>
+      </section>
+
+      <section class="panel create-panel" aria-labelledby="createHeading">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">PLAN YOUR NEXT MOVE</p>
+            <h2 id="createHeading">Create a task</h2>
+            <p class="panel-subtitle">Write it down. Get it done.</p>
+          </div>
+          <span class="heading-symbol" aria-hidden="true">＋</span>
+        </div>
+
+        <form id="taskForm" class="task-form">
+          <div class="field field-full">
+            <label for="taskInput">Task name</label>
+            <input id="taskInput" name="title" type="text" maxlength="120" placeholder="e.g. Complete my JavaScript assignment" autocomplete="off" required>
+          </div>
+          <div class="form-options">
+            <div class="field">
+              <label for="categoryInput">Category</label>
+              <select id="categoryInput" name="category">
+                <option value="Personal">Personal</option>
+                <option value="Study">Study</option>
+                <option value="Work">Work</option>
+                <option value="Health">Health</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="priorityInput">Priority</label>
+              <select id="priorityInput" name="priority">
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="dateInput">Due date <span class="optional">(optional)</span></label>
+              <input id="dateInput" name="dueDate" type="date">
+            </div>
+          </div>
+          <div class="form-footer">
+            <p class="form-hint"><span aria-hidden="true">✦</span> Small progress is still progress.</p>
+            <button class="primary-button" type="submit"><span aria-hidden="true">＋</span> Add task</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel task-panel" aria-labelledby="tasksHeading">
+        <div class="task-panel-heading">
+          <div>
+            <p class="section-kicker">YOUR TO-DO LIST</p>
+            <h2 id="tasksHeading">Your tasks</h2>
+            <p class="panel-subtitle">Everything you need to focus on.</p>
+          </div>
+          <button id="clearCompleted" class="text-button" type="button" disabled>Clear completed</button>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-field" for="searchInput">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Search tasks..." autocomplete="off">
+          </label>
+          <select id="categoryFilter" aria-label="Filter by category">
+            <option value="all">All categories</option>
+            <option value="Personal">Personal</option>
+            <option value="Study">Study</option>
+            <option value="Work">Work</option>
+            <option value="Health">Health</option>
+            <option value="Other">Other</option>
+          </select>
+          <select id="sortInput" aria-label="Sort tasks">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="dueDate">Due date</option>
+            <option value="priority">Priority</option>
+          </select>
+        </div>
+
+        <div id="taskList" class="task-list" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-graphic" aria-hidden="true">✦</div>
+          <h3 id="emptyTitle">Nothing on your list yet.</h3>
+          <p id="emptyCopy">Add your first task above and build some momentum.</p>
+        </div>
+      </section>
+
+      <footer class="page-footer">TASKFLARE <span>•</span> PLAN WITH PURPOSE. FINISH WITH PRIDE.</footer>
+    </main>
+  </div>
+
+  <!-- Edit task dialog -->
+  <div class="modal-backdrop" id="editModal" hidden>
+    <section class="edit-dialog" role="dialog" aria-modal="true" aria-labelledby="editHeading">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">MAKE AN UPDATE</p>
+          <h2 id="editHeading">Edit task</h2>
+        </div>
+        <button class="icon-button" id="closeModal" type="button" aria-label="Close dialog">×</button>
+      </div>
+      <form id="editForm">
+        <div class="field">
+          <label for="editTitle">Task name</label>
+          <input id="editTitle" type="text" maxlength="120" required>
+        </div>
+        <div class="field">
+          <label for="editCategory">Category</label>
+          <select id="editCategory">
+            <option value="Personal">Personal</option>
+            <option value="Study">Study</option>
+            <option value="Work">Work</option>
+            <option value="Health">Health</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="editPriority">Priority</label>
+          <select id="editPriority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="editDueDate">Due date</label>
+          <input id="editDueDate" type="date">
+        </div>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="cancelEdit" type="button">Cancel</button>
+          <button class="primary-button" type="submit">Save changes</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Footer -->
+<footer class="footer">
+    <div class="footer-line"></div>
+
+    <p>Designed & Developed by</p>
+
+    <h3>LAL RHIDHISHAN R</h3>
+
+    <p class="register">
+        Register No: <span>212225100022</span>
+    </p>
+
+    <p class="copyright">
+        © 2026 TaskFlare. All Rights Reserved.
+    </p>
+</footer>
+</body>
+</html>
